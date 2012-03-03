@@ -23,20 +23,20 @@ public class TestPathHelper {
     @Test
     public void shaShouldBeEqualForSameFile() throws Exception {
         Path p = createFileWithContents( pathString( "f" ), "hello" );
-        assertEquals( sha1( p ), sha1( p ) );
+        assertEquals( sha( p ), sha( p ) );
     }
 
     @Test
     public void shaShouldBeEqualForFilesWithSameContents() throws Exception {
         Path p1 = createFileWithContents( pathString( "f1" ), "hello" );
         Path p2 = createFileWithContents( pathString( "f2" ), "hello" );
-        assertEquals( sha1( p1 ), sha1( p2 ) );
+        assertEquals( sha( p1 ), sha( p2 ) );
     }
 
     @Test
     public void shaShouldNotBeEqualForFilesWithDiffContents() throws Exception {
         Path p1 = createFileWithContents( pathString( "f1" ), "hello" );
         Path p2 = createFileWithContents( pathString( "f2" ), "goodbye" );
-        assertNotEquals( sha1( p1 ), sha1( p2 ) );
+        assertNotEquals( sha( p1 ), sha( p2 ) );
     }
 }
