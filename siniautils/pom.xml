@@ -7,13 +7,6 @@
 	<name>${project.artifactId}</name>
 	<description>Sinia utility classes</description>
 	<inceptionYear>2011</inceptionYear>
-	<licenses>
-		<license>
-			<name>My License</name>
-			<url>http://....</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
 
 	<properties>
 		<maven.compiler.source>1.7</maven.compiler.source>
@@ -26,7 +19,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.10</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>

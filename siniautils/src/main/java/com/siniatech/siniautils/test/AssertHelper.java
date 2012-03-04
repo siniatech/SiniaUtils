@@ -1,6 +1,6 @@
 package com.siniatech.siniautils.test;
 
-import static junit.framework.Assert.*;
+import static org.junit.Assert.*;
 
 public class AssertHelper {
 

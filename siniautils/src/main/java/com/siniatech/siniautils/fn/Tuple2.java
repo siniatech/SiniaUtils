@@ -10,10 +10,12 @@ public class Tuple2<T, U> implements ITuple2<T, U> {
         this.second = second;
     }
 
+    @Override
     public T _1() {
         return first;
     }
 
+    @Override
     public U _2() {
         return second;
     }
