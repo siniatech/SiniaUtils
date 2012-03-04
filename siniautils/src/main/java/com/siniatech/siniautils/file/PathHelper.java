@@ -6,6 +6,7 @@ import static org.apache.commons.codec.digest.DigestUtils.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -19,24 +20,26 @@ public class PathHelper {
         } else {
             createFile( path );
         }
-        BufferedWriter out = newBufferedWriter( path, Charset.defaultCharset() );
-        out.write( contents );
-        out.close();
-        return path;
+        try (BufferedWriter out = newBufferedWriter( path, Charset.defaultCharset() )) {
+            out.write( contents );
+            return path;
+        }
     }
 
     static public String getFileContents( Path file ) throws IOException {
-        StringBuffer sb = new StringBuffer();
-        BufferedReader in = newBufferedReader( file, Charset.defaultCharset() );
-        String line;
-        while ( ( line = in.readLine() ) != null ) {
-            sb.append( line );
+        try (BufferedReader in = newBufferedReader( file, Charset.defaultCharset() )) {
+            StringBuffer sb = new StringBuffer();
+            String line;
+            while ( ( line = in.readLine() ) != null ) {
+                sb.append( line );
+            }
+            return sb.toString();
         }
-        in.close();
-        return sb.toString();
     }
 
     static public String sha( Path path ) throws IOException {
-        return sha256Hex( newInputStream( path ) );
+        try (InputStream in = newInputStream( path )) {
+            return sha256Hex( in );
+        }
     }
 }
