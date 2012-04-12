@@ -1,4 +1,4 @@
-package com.siniatech.siniautils.set;
+package com.siniatech.siniautils.collection;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,4 +18,6 @@ public class SetHelper {
         set.addAll( s2 );
         return set;
     }
+
+
 }

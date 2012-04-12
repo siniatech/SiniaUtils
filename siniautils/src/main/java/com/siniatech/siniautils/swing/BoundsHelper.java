@@ -2,6 +2,7 @@ package com.siniatech.siniautils.swing;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +19,7 @@ public class BoundsHelper {
         }
         return new Dimension( maxX, maxY );
     }
-    
+
     static public int getXExtentOfComponents( Collection<? extends Component> components ) {
         int maxX = 0;
         for ( Component component : components ) {
@@ -75,9 +76,9 @@ public class BoundsHelper {
     /**
      * Returns components whose origin is in bounds.
      */
-    static public Collection<? extends Component> getComponentsIn( Collection<? extends Component> components, Rectangle bounds ) {
-        List<Component> componentsInBounds = new ArrayList<Component>();
-        for ( Component component : components ) {
+    static public <T extends Component> Collection<T> getComponentsIn( Collection<T> components, Rectangle bounds ) {
+        List<T> componentsInBounds = new ArrayList<>();
+        for ( T component : components ) {
             if ( bounds.contains( component.getLocation() ) ) {
                 componentsInBounds.add( component );
             }
@@ -85,5 +86,14 @@ public class BoundsHelper {
         return componentsInBounds;
     }
 
+    static public <T extends Component> Collection<T> getComponentsContaining( Collection<T> components, Point point ) {
+        List<T> componentsContaining = new ArrayList<>();
+        for ( T component : components ) {
+            if ( component.getBounds().contains( point ) ) {
+                componentsContaining.add( component );
+            }
+        }
+        return componentsContaining;
+    }
     // need a getComponentsWhollyIn at some point
 }

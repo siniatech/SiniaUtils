@@ -1,4 +1,4 @@
-package com.siniatech.siniautils.list;
+package com.siniatech.siniautils.collection;
 
 import java.util.List;
 
