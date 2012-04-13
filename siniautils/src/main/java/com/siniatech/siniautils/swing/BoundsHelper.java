@@ -76,10 +76,20 @@ public class BoundsHelper {
     /**
      * Returns components whose origin is in bounds.
      */
+    static public <T extends Component> Collection<T> getComponentsOriginIn( Collection<T> components, Rectangle bounds ) {
+        List<T> componentsOriginInBounds = new ArrayList<>();
+        for ( T component : components ) {
+            if ( bounds.contains( component.getLocation() ) ) {
+                componentsOriginInBounds.add( component );
+            }
+        }
+        return componentsOriginInBounds;
+    }
+
     static public <T extends Component> Collection<T> getComponentsIn( Collection<T> components, Rectangle bounds ) {
         List<T> componentsInBounds = new ArrayList<>();
         for ( T component : components ) {
-            if ( bounds.contains( component.getLocation() ) ) {
+            if ( bounds.intersects( component.getBounds() ) ) {
                 componentsInBounds.add( component );
             }
         }
