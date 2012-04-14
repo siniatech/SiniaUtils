@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.siniatech.siniautils.collection.CollectionHelper;
+
 public class BoundsHelper {
 
     static public Dimension getExtentOfComponents( Collection<? extends Component> components ) {
@@ -105,5 +107,12 @@ public class BoundsHelper {
         }
         return componentsContaining;
     }
+
+    static public <T extends Component> T getComponentContaining( Collection<T> components, Point point ) {
+        Collection<T> componentsContaining = getComponentsContaining( components, point );
+        assert componentsContaining.size() <= 1;
+        return componentsContaining.size() == 0 ? null : CollectionHelper.getArbitraryMember( componentsContaining );
+    }
+
     // need a getComponentsWhollyIn at some point
 }
