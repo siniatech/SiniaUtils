@@ -114,5 +114,13 @@ public class BoundsHelper {
         return componentsContaining.size() == 0 ? null : CollectionHelper.getArbitraryMember( componentsContaining );
     }
 
+    static public boolean alignsVertically( Rectangle r1, Rectangle r2 ) {
+        return r1.getMaxX() == r2.getMaxX() && r1.getMinX() == r2.getMinX();
+    }
+
+    static public boolean alignsHorizontally( Rectangle r1, Rectangle r2 ) {
+        return r1.getMaxY() == r2.getMaxY() && r1.getMinY() == r2.getMinY();
+    }
+
     // need a getComponentsWhollyIn at some point
 }
