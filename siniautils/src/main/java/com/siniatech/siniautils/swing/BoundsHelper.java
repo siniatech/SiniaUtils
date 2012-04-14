@@ -108,6 +108,34 @@ public class BoundsHelper {
         return componentsContaining;
     }
 
+    /**
+     * Returns the components that intersect the horizontal line at y
+     */
+    static public <T extends Component> Collection<T> getComponentsCrossingY( Collection<T> components, int y ) {
+        List<T> componentsCrossing = new ArrayList<>();
+        for ( T component : components ) {
+            Rectangle bounds = component.getBounds();
+            if ( bounds.y <= y && ( bounds.y + bounds.height ) < y ) {
+                componentsCrossing.add( component );
+            }
+        }
+        return componentsCrossing;
+    }
+
+    /**
+     * Returns the components that intersect the vertical line at x
+     */
+    static public <T extends Component> Collection<T> getComponentsCrossingX( Collection<T> components, int x ) {
+        List<T> componentsCrossing = new ArrayList<>();
+        for ( T component : components ) {
+            Rectangle bounds = component.getBounds();
+            if ( bounds.x <= x && ( bounds.x + bounds.width ) < x ) {
+                componentsCrossing.add( component );
+            }
+        }
+        return componentsCrossing;
+    }
+
     static public <T extends Component> T getComponentContaining( Collection<T> components, Point point ) {
         Collection<T> componentsContaining = getComponentsContaining( components, point );
         assert componentsContaining.size() <= 1;
