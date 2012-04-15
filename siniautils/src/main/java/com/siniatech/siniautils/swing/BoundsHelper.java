@@ -115,7 +115,7 @@ public class BoundsHelper {
         List<T> componentsCrossing = new ArrayList<>();
         for ( T component : components ) {
             Rectangle bounds = component.getBounds();
-            if ( bounds.y <= y && ( bounds.y + bounds.height ) < y ) {
+            if ( bounds.y <= y && ( bounds.y + bounds.height ) > y ) {
                 componentsCrossing.add( component );
             }
         }
@@ -129,7 +129,7 @@ public class BoundsHelper {
         List<T> componentsCrossing = new ArrayList<>();
         for ( T component : components ) {
             Rectangle bounds = component.getBounds();
-            if ( bounds.x <= x && ( bounds.x + bounds.width ) < x ) {
+            if ( bounds.x <= x && ( bounds.x + bounds.width ) > x ) {
                 componentsCrossing.add( component );
             }
         }
