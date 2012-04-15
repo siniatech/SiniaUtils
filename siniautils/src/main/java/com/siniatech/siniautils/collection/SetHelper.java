@@ -19,5 +19,8 @@ public class SetHelper {
         return set;
     }
 
+    static public <T> Set<T> emptySet() {
+        return new HashSet<>();
+    }
 
 }
