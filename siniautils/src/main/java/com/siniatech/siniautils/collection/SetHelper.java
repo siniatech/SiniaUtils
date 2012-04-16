@@ -22,5 +22,5 @@ public class SetHelper {
     static public <T> Set<T> emptySet() {
         return new HashSet<>();
     }
-
+    
 }
