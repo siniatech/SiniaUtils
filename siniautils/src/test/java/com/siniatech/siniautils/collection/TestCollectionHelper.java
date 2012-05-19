@@ -36,11 +36,6 @@ public class TestCollectionHelper {
     }
 
     @Test
-    public void getArbitraryMember_arbMemberInCollection() throws Exception {
-        assertNull( getArbitraryMember( Arrays.asList() ) );
-    }
-
-    @Test
     public void getArbitraryMember_arbMemberInList() throws Exception {
         List<INamed> list = Arrays.asList( a, b, c );
         INamed arbitraryMember = getArbitraryMember( list );
