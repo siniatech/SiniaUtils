@@ -200,7 +200,7 @@ public class TestBoundsHelper {
     @Test
     public void getComponentsOriginIn_failsWithNull_p1() {
         try {
-            getComponentsOriginIn( null, new Rectangle( 0, 0, 100, 100 ) );
+            getComponentsWithOriginIn( null, new Rectangle( 0, 0, 100, 100 ) );
             fail();
         } catch ( Exception e ) {
         }
@@ -209,7 +209,7 @@ public class TestBoundsHelper {
     @Test
     public void getComponentsOriginIn_failsWithNull_p2() {
         try {
-            getComponentsOriginIn( Arrays.<JComponent> asList( a ), null );
+            getComponentsWithOriginIn( Arrays.<JComponent> asList( a ), null );
             fail();
         } catch ( Exception e ) {
         }
@@ -217,32 +217,34 @@ public class TestBoundsHelper {
 
     @Test
     public void getComponentsOriginIn_emptyList() {
-        assertEquals( Arrays.<JComponent> asList(), getComponentsOriginIn( Arrays.<JComponent> asList(), new Rectangle( 0, 0, 100, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsWithOriginIn( Arrays.<JComponent> asList(), new Rectangle( 0, 0, 100, 100 ) ) );
     }
 
     @Test
     public void getComponentsOriginIn_single() {
-        assertEquals( Arrays.<JComponent> asList( a ), getComponentsOriginIn( Arrays.<JComponent> asList( a ), new Rectangle( 0, 0, 100, 200 ) ) );
-        assertEquals( Arrays.<JComponent> asList(), getComponentsOriginIn( Arrays.<JComponent> asList( b ), new Rectangle( 0, 0, 100, 100 ) ) );
-        assertEquals( Arrays.<JComponent> asList(), getComponentsOriginIn( Arrays.<JComponent> asList( c ), new Rectangle( 0, 0, 100, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList( a ), getComponentsWithOriginIn( Arrays.<JComponent> asList( a ), new Rectangle( 0, 0, 100, 200 ) ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsWithOriginIn( Arrays.<JComponent> asList( b ), new Rectangle( 0, 0, 100, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsWithOriginIn( Arrays.<JComponent> asList( c ), new Rectangle( 0, 0, 100, 100 ) ) );
     }
 
     @Test
     public void getComponentsOriginIn_multiple() {
-        a.setBounds( 50, 100, 500, 300 );
-        b.setBounds( 100, 105, 400, 595 );
-        c.setBounds( 0, 500, 200, 200 );
-        assertEquals( Arrays.<JComponent> asList( a, b ), getComponentsOriginIn( Arrays.<JComponent> asList( a, b ), new Rectangle( 0, 0, 200, 200 ) ) );
-        assertEquals( Arrays.<JComponent> asList( b ), getComponentsOriginIn( Arrays.<JComponent> asList( b, c ), new Rectangle( 0, 0, 200, 200 ) ) );
-        assertEquals( Arrays.<JComponent> asList( c ), getComponentsOriginIn( Arrays.<JComponent> asList( c, b, a ), new Rectangle( 0, 300, 100, 300 ) ) );
+        assertEquals( Arrays.<JComponent> asList( a, b ), getComponentsWithOriginIn( Arrays.<JComponent> asList( a, b ), new Rectangle( 0, 0, 200, 200 ) ) );
+        assertEquals( Arrays.<JComponent> asList( b ), getComponentsWithOriginIn( Arrays.<JComponent> asList( b, c ), new Rectangle( 0, 0, 200, 200 ) ) );
+        assertEquals( Arrays.<JComponent> asList( c ), getComponentsWithOriginIn( Arrays.<JComponent> asList( c, b, a ), new Rectangle( 0, 300, 100, 300 ) ) );
     }
 
     @Test
     public void getComponentsOriginIn_boundaries() {
-        assertEquals( Arrays.<JComponent> asList( a ), getComponentsOriginIn( Arrays.<JComponent> asList( a ), new Rectangle( 50, 100, 100, 100 ) ) );
-        assertEquals( Arrays.<JComponent> asList( b ), getComponentsOriginIn( Arrays.<JComponent> asList( b ), new Rectangle( 99, 104, 100, 100 ) ) );
-        assertEquals( Arrays.<JComponent> asList(), getComponentsOriginIn( Arrays.<JComponent> asList( c ), new Rectangle( 1, 501, 100, 100 ) ) );
-        // to do - far boundaries
+                                                        a.setBounds( 50, 100, 500, 300 );
+                                                        b.setBounds( 100, 105, 400, 595 );
+                                                        c.setBounds( 0, 500, 200, 200 );
+        assertEquals( Arrays.<JComponent> asList( a ), getComponentsWithOriginIn( Arrays.<JComponent> asList( a ), new Rectangle( 50, 100, 100, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList( b ), getComponentsWithOriginIn( Arrays.<JComponent> asList( b ), new Rectangle( 99, 104, 100, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsWithOriginIn( Arrays.<JComponent> asList( c ), new Rectangle( 1, 501, 100, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList( ), getComponentsWithOriginIn( Arrays.<JComponent> asList( a ), new Rectangle( 0, 0, 50, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList( b ), getComponentsWithOriginIn( Arrays.<JComponent> asList( b ), new Rectangle( 50, 55, 51, 51 ) ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsWithOriginIn( Arrays.<JComponent> asList( c ), new Rectangle( 0, 0, 50, 499 ) ) );
     }
 
     @Test

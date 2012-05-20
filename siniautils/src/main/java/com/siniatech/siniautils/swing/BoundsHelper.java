@@ -78,7 +78,7 @@ public class BoundsHelper {
     /**
      * Returns components whose origin is in bounds.
      */
-    static public <T extends Component> Collection<T> getComponentsOriginIn( Collection<T> components, Rectangle bounds ) {
+    static public <T extends Component> Collection<T> getComponentsWithOriginIn( Collection<T> components, Rectangle bounds ) {
         List<T> componentsOriginInBounds = new ArrayList<>();
         for ( T component : components ) {
             if ( bounds.contains( component.getLocation() ) ) {
