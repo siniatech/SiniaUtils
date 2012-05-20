@@ -323,7 +323,44 @@ public class TestBoundsHelper {
     }
 
     @Test
-    public void compShouldContainPointAtBounds() {
+    public void getComponentsContaining_failsWithNull_p1() {
+        try {
+            getComponentsContaining( null, new Point( 0, 0 ) );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void getComponentsContaining_failsWithNull_p2() {
+        try {
+            getComponentsContaining( Arrays.<JComponent> asList( a ), null );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void getComponentsContaining_emptyList() {
+        assertEquals( Arrays.<JComponent> asList(), getComponentsContaining( Arrays.<JComponent> asList(), new Point( 0, 0 ) ) );
+    }
+
+    @Test
+    public void getComponentsContaining_single() {
+        assertEquals( Arrays.<JComponent> asList( a ), getComponentsContaining( Arrays.<JComponent> asList( a ), new Point( 50, 105 ) ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsContaining( Arrays.<JComponent> asList( b ), new Point( 90, 90 ) ) );
+        assertEquals( Arrays.<JComponent> asList( c ), getComponentsContaining( Arrays.<JComponent> asList( c ), new Point( 50, 505 ) ) );
+    }
+
+    @Test
+    public void getComponentsContaining_multiple() {
+        assertEquals( Arrays.<JComponent> asList( a, b ), getComponentsContaining( Arrays.<JComponent> asList( a, b ), new Point( 110, 110 ) ) );
+        assertEquals( Arrays.<JComponent> asList( b ), getComponentsContaining( Arrays.<JComponent> asList( b, c ), new Point( 100, 110 ) ) );
+        assertEquals( Arrays.<JComponent> asList( c ), getComponentsContaining( Arrays.<JComponent> asList( c, b, a ), new Point( 0, 600 ) ) );
+    }
+
+    @Test
+    public void getComponentContaining_pointAtBounds() {
         JPanel panel = new JPanel();
         panel.setBounds( 20, 30, 40, 50 );
         List<JPanel> components = Arrays.asList( panel );
