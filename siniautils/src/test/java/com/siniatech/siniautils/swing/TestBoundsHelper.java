@@ -85,6 +85,34 @@ public class TestBoundsHelper {
     }
 
     @Test
+    public void getYExtentOfComponents_failsWithNull() {
+        try {
+            getYExtentOfComponents( null );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void getYExtentOfComponents_emptyList() {
+        assertEquals( 0, getYExtentOfComponents( Arrays.<JComponent> asList() ) );
+    }
+
+    @Test
+    public void getYExtentOfComponents_single() {
+        assertEquals( 400, getYExtentOfComponents( Arrays.<JComponent> asList( a ) ) );
+        assertEquals( 700, getYExtentOfComponents( Arrays.<JComponent> asList( b ) ) );
+        assertEquals( 700, getYExtentOfComponents( Arrays.<JComponent> asList( c ) ) );
+    }
+
+    @Test
+    public void getYExtentOfComponents_multiple() {
+        assertEquals( 700, getYExtentOfComponents( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( 700, getYExtentOfComponents( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( 700, getYExtentOfComponents( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
+
+    @Test
     public void compShouldContainPointAtBounds() {
         JPanel panel = new JPanel();
         panel.setBounds( 20, 30, 40, 50 );
