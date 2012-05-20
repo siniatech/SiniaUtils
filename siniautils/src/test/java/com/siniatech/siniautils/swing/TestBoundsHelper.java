@@ -24,7 +24,7 @@ public class TestBoundsHelper {
     @BeforeClass
     static public void setBounds() {
         a.setBounds( 50, 100, 500, 300 );
-        b.setBounds( 100, 100, 400, 600 );
+        b.setBounds( 100, 105, 400, 595 );
         c.setBounds( 0, 500, 200, 200 );
     }
 
@@ -110,6 +110,90 @@ public class TestBoundsHelper {
         assertEquals( 700, getYExtentOfComponents( Arrays.<JComponent> asList( a, b ) ) );
         assertEquals( 700, getYExtentOfComponents( Arrays.<JComponent> asList( b, c ) ) );
         assertEquals( 700, getYExtentOfComponents( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
+    
+    @Test
+    public void getTopLeftmostComponent_failsWithNull() {
+        try {
+            getTopLeftmostComponent( null );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+    
+    @Test
+    public void getTopLeftmostComponent_emptyList() {
+        assertEquals( null, getTopLeftmostComponent( Arrays.<JComponent> asList() ) );
+    }
+    
+    @Test
+    public void getTopLeftmostComponent_single() {
+        assertEquals( a, getTopLeftmostComponent( Arrays.<JComponent> asList( a ) ) );
+        assertEquals( b, getTopLeftmostComponent( Arrays.<JComponent> asList( b ) ) );
+        assertEquals( c, getTopLeftmostComponent( Arrays.<JComponent> asList( c ) ) );
+    }
+    
+    @Test
+    public void getTopLeftmostComponent_multiple() {
+        assertEquals( a, getTopLeftmostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( b, getTopLeftmostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( a, getTopLeftmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
+    
+    @Test
+    public void getLeftmostComponent_failsWithNull() {
+        try {
+            getLeftmostComponent( null );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+    
+    @Test
+    public void getLeftmostComponent_emptyList() {
+        assertEquals( null, getLeftmostComponent( Arrays.<JComponent> asList() ) );
+    }
+    
+    @Test
+    public void getLeftmostComponent_single() {
+        assertEquals( a, getLeftmostComponent( Arrays.<JComponent> asList( a ) ) );
+        assertEquals( b, getLeftmostComponent( Arrays.<JComponent> asList( b ) ) );
+        assertEquals( c, getLeftmostComponent( Arrays.<JComponent> asList( c ) ) );
+    }
+    
+    @Test
+    public void getLeftmostComponent_multiple() {
+        assertEquals( a, getLeftmostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( c, getLeftmostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( c, getLeftmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
+
+    @Test
+    public void getTopmostComponent_failsWithNull() {
+        try {
+            getTopmostComponent( null );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+    
+    @Test
+    public void getTopmostComponent_emptyList() {
+        assertEquals( null, getTopmostComponent( Arrays.<JComponent> asList() ) );
+    }
+    
+    @Test
+    public void getTopmostComponent_single() {
+        assertEquals( a, getTopmostComponent( Arrays.<JComponent> asList( a ) ) );
+        assertEquals( b, getTopmostComponent( Arrays.<JComponent> asList( b ) ) );
+        assertEquals( c, getTopmostComponent( Arrays.<JComponent> asList( c ) ) );
+    }
+    
+    @Test
+    public void getTopmostComponent_multiple() {
+        assertEquals( a, getTopmostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( b, getTopmostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( a, getTopmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
     }
 
     @Test
