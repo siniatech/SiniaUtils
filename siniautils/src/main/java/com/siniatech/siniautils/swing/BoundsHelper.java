@@ -88,7 +88,7 @@ public class BoundsHelper {
         return componentsOriginInBounds;
     }
 
-    static public <T extends Component> Collection<T> getComponentsIn( Collection<T> components, Rectangle bounds ) {
+    static public <T extends Component> Collection<T> getComponentsThatIntersect( Collection<T> components, Rectangle bounds ) {
         List<T> componentsInBounds = new ArrayList<>();
         for ( T component : components ) {
             if ( bounds.intersects( component.getBounds() ) ) {

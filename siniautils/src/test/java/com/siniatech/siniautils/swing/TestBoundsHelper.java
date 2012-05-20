@@ -18,9 +18,22 @@ import org.junit.Test;
 
 public class TestBoundsHelper {
 
-    static final private JComponent a = new JLabel( "a" );
-    static final private JComponent b = new JLabel( "b" );
-    static final private JComponent c = new JLabel( "c" );
+    static class TestLabel extends JLabel {
+        private final String s;
+
+        public TestLabel( String s ) {
+            this.s = s;
+        }
+
+        @Override
+        public String toString() {
+            return s;
+        }
+    }
+
+    static final private JComponent a = new TestLabel( "a" );
+    static final private JComponent b = new TestLabel( "b" );
+    static final private JComponent c = new TestLabel( "c" );
 
     @BeforeClass
     static public void setBounds() {
@@ -198,7 +211,7 @@ public class TestBoundsHelper {
     }
 
     @Test
-    public void getComponentsOriginIn_failsWithNull_p1() {
+    public void getComponentsWithOriginIn_failsWithNull_p1() {
         try {
             getComponentsWithOriginIn( null, new Rectangle( 0, 0, 100, 100 ) );
             fail();
@@ -207,7 +220,7 @@ public class TestBoundsHelper {
     }
 
     @Test
-    public void getComponentsOriginIn_failsWithNull_p2() {
+    public void getComponentsWithOriginIn_failsWithNull_p2() {
         try {
             getComponentsWithOriginIn( Arrays.<JComponent> asList( a ), null );
             fail();
@@ -216,35 +229,97 @@ public class TestBoundsHelper {
     }
 
     @Test
-    public void getComponentsOriginIn_emptyList() {
+    public void getComponentsWithOriginIn_emptyList() {
         assertEquals( Arrays.<JComponent> asList(), getComponentsWithOriginIn( Arrays.<JComponent> asList(), new Rectangle( 0, 0, 100, 100 ) ) );
     }
 
     @Test
-    public void getComponentsOriginIn_single() {
+    public void getComponentsWithOriginIn_single() {
         assertEquals( Arrays.<JComponent> asList( a ), getComponentsWithOriginIn( Arrays.<JComponent> asList( a ), new Rectangle( 0, 0, 100, 200 ) ) );
         assertEquals( Arrays.<JComponent> asList(), getComponentsWithOriginIn( Arrays.<JComponent> asList( b ), new Rectangle( 0, 0, 100, 100 ) ) );
         assertEquals( Arrays.<JComponent> asList(), getComponentsWithOriginIn( Arrays.<JComponent> asList( c ), new Rectangle( 0, 0, 100, 100 ) ) );
     }
 
     @Test
-    public void getComponentsOriginIn_multiple() {
+    public void getComponentsWithOriginIn_multiple() {
         assertEquals( Arrays.<JComponent> asList( a, b ), getComponentsWithOriginIn( Arrays.<JComponent> asList( a, b ), new Rectangle( 0, 0, 200, 200 ) ) );
         assertEquals( Arrays.<JComponent> asList( b ), getComponentsWithOriginIn( Arrays.<JComponent> asList( b, c ), new Rectangle( 0, 0, 200, 200 ) ) );
         assertEquals( Arrays.<JComponent> asList( c ), getComponentsWithOriginIn( Arrays.<JComponent> asList( c, b, a ), new Rectangle( 0, 300, 100, 300 ) ) );
     }
 
     @Test
-    public void getComponentsOriginIn_boundaries() {
-                                                        a.setBounds( 50, 100, 500, 300 );
-                                                        b.setBounds( 100, 105, 400, 595 );
-                                                        c.setBounds( 0, 500, 200, 200 );
+    public void getComponentsWithOriginIn_boundaries() {
         assertEquals( Arrays.<JComponent> asList( a ), getComponentsWithOriginIn( Arrays.<JComponent> asList( a ), new Rectangle( 50, 100, 100, 100 ) ) );
         assertEquals( Arrays.<JComponent> asList( b ), getComponentsWithOriginIn( Arrays.<JComponent> asList( b ), new Rectangle( 99, 104, 100, 100 ) ) );
         assertEquals( Arrays.<JComponent> asList(), getComponentsWithOriginIn( Arrays.<JComponent> asList( c ), new Rectangle( 1, 501, 100, 100 ) ) );
-        assertEquals( Arrays.<JComponent> asList( ), getComponentsWithOriginIn( Arrays.<JComponent> asList( a ), new Rectangle( 0, 0, 50, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsWithOriginIn( Arrays.<JComponent> asList( a ), new Rectangle( 0, 0, 50, 100 ) ) );
         assertEquals( Arrays.<JComponent> asList( b ), getComponentsWithOriginIn( Arrays.<JComponent> asList( b ), new Rectangle( 50, 55, 51, 51 ) ) );
         assertEquals( Arrays.<JComponent> asList(), getComponentsWithOriginIn( Arrays.<JComponent> asList( c ), new Rectangle( 0, 0, 50, 499 ) ) );
+    }
+
+    @Test
+    public void getComponentsThatIntersect_failsWithNull_p1() {
+        try {
+            getComponentsThatIntersect( null, new Rectangle( 0, 0, 100, 100 ) );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void getComponentsThatIntersect_failsWithNull_p2() {
+        try {
+            getComponentsThatIntersect( Arrays.<JComponent> asList( a ), null );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void getComponentsThatIntersect_emptyList() {
+        assertEquals( Arrays.<JComponent> asList(), getComponentsThatIntersect( Arrays.<JComponent> asList(), new Rectangle( 0, 0, 100, 100 ) ) );
+    }
+
+    @Test
+    public void getComponentsThatIntersect_single() {
+        assertEquals( Arrays.<JComponent> asList(), getComponentsThatIntersect( Arrays.<JComponent> asList( a ), new Rectangle( 0, 0, 50, 50 ) ) );
+        assertEquals( Arrays.<JComponent> asList( b ), getComponentsThatIntersect( Arrays.<JComponent> asList( b ), new Rectangle( 300, 100, 100, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList( c ), getComponentsThatIntersect( Arrays.<JComponent> asList( c ), new Rectangle( 150, 400, 100, 200 ) ) );
+    }
+
+    @Test
+    public void getComponentsThatIntersect_multiple() {
+        assertEquals( Arrays.<JComponent> asList( a, b ), getComponentsThatIntersect( Arrays.<JComponent> asList( a, b ), new Rectangle( 0, 0, 200, 200 ) ) );
+        assertEquals( Arrays.<JComponent> asList( b ), getComponentsThatIntersect( Arrays.<JComponent> asList( b, c ), new Rectangle( 0, 0, 200, 200 ) ) );
+        assertEquals( Arrays.<JComponent> asList( c, a ), getComponentsThatIntersect( Arrays.<JComponent> asList( c, b, a ), new Rectangle( 0, 300, 100, 250 ) ) );
+    }
+
+    @Test
+    public void getComponentsThatIntersect_nw() {
+        assertEquals( Arrays.<JComponent> asList( a ), getComponentsThatIntersect( Arrays.<JComponent> asList( a ), new Rectangle( 0, 0, 51, 101 ) ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsThatIntersect( Arrays.<JComponent> asList( b ), new Rectangle( 0, 0, 100, 105 ) ) );
+        assertEquals( Arrays.<JComponent> asList( c ), getComponentsThatIntersect( Arrays.<JComponent> asList( c ), new Rectangle( 0, 0, 50, 700 ) ) );
+    }
+
+    @Test
+    public void getComponentsThatIntersect_ne() {
+        assertEquals( Arrays.<JComponent> asList( a ), getComponentsThatIntersect( Arrays.<JComponent> asList( a ), new Rectangle( 549, 0, 50, 101 ) ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsThatIntersect( Arrays.<JComponent> asList( b ), new Rectangle( 500, 0, 100, 105 ) ) );
+        assertEquals( Arrays.<JComponent> asList( c ), getComponentsThatIntersect( Arrays.<JComponent> asList( c ), new Rectangle( 150, 550, 100, 100 ) ) );
+    }
+
+    @Test
+    public void getComponentsThatIntersect_sw() {
+        assertEquals( Arrays.<JComponent> asList( a ), getComponentsThatIntersect( Arrays.<JComponent> asList( a ), new Rectangle( 0, 399, 51, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsThatIntersect( Arrays.<JComponent> asList( b ), new Rectangle( 0, 700, 100, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList( c ), getComponentsThatIntersect( Arrays.<JComponent> asList( c ), new Rectangle( 0, 650, 150, 100 ) ) );
+    }
+
+    @Test
+    public void getComponentsThatIntersect_se() {
+        assertEquals( Arrays.<JComponent> asList( a ), getComponentsThatIntersect( Arrays.<JComponent> asList( a ), new Rectangle( 549, 100, 100, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsThatIntersect( Arrays.<JComponent> asList( b ), new Rectangle( 500, 104, 100, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList( c ), getComponentsThatIntersect( Arrays.<JComponent> asList( c ), new Rectangle( 150, 501, 100, 100 ) ) );
     }
 
     @Test
