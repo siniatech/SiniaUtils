@@ -5,6 +5,7 @@ import static junit.framework.Assert.*;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.Arrays;
 import java.util.List;
 
@@ -111,7 +112,7 @@ public class TestBoundsHelper {
         assertEquals( 700, getYExtentOfComponents( Arrays.<JComponent> asList( b, c ) ) );
         assertEquals( 700, getYExtentOfComponents( Arrays.<JComponent> asList( a, b, c ) ) );
     }
-    
+
     @Test
     public void getTopLeftmostComponent_failsWithNull() {
         try {
@@ -120,26 +121,26 @@ public class TestBoundsHelper {
         } catch ( Exception e ) {
         }
     }
-    
+
     @Test
     public void getTopLeftmostComponent_emptyList() {
         assertEquals( null, getTopLeftmostComponent( Arrays.<JComponent> asList() ) );
     }
-    
+
     @Test
     public void getTopLeftmostComponent_single() {
         assertEquals( a, getTopLeftmostComponent( Arrays.<JComponent> asList( a ) ) );
         assertEquals( b, getTopLeftmostComponent( Arrays.<JComponent> asList( b ) ) );
         assertEquals( c, getTopLeftmostComponent( Arrays.<JComponent> asList( c ) ) );
     }
-    
+
     @Test
     public void getTopLeftmostComponent_multiple() {
         assertEquals( a, getTopLeftmostComponent( Arrays.<JComponent> asList( a, b ) ) );
         assertEquals( b, getTopLeftmostComponent( Arrays.<JComponent> asList( b, c ) ) );
         assertEquals( a, getTopLeftmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
     }
-    
+
     @Test
     public void getLeftmostComponent_failsWithNull() {
         try {
@@ -148,19 +149,19 @@ public class TestBoundsHelper {
         } catch ( Exception e ) {
         }
     }
-    
+
     @Test
     public void getLeftmostComponent_emptyList() {
         assertEquals( null, getLeftmostComponent( Arrays.<JComponent> asList() ) );
     }
-    
+
     @Test
     public void getLeftmostComponent_single() {
         assertEquals( a, getLeftmostComponent( Arrays.<JComponent> asList( a ) ) );
         assertEquals( b, getLeftmostComponent( Arrays.<JComponent> asList( b ) ) );
         assertEquals( c, getLeftmostComponent( Arrays.<JComponent> asList( c ) ) );
     }
-    
+
     @Test
     public void getLeftmostComponent_multiple() {
         assertEquals( a, getLeftmostComponent( Arrays.<JComponent> asList( a, b ) ) );
@@ -176,24 +177,72 @@ public class TestBoundsHelper {
         } catch ( Exception e ) {
         }
     }
-    
+
     @Test
     public void getTopmostComponent_emptyList() {
         assertEquals( null, getTopmostComponent( Arrays.<JComponent> asList() ) );
     }
-    
+
     @Test
     public void getTopmostComponent_single() {
         assertEquals( a, getTopmostComponent( Arrays.<JComponent> asList( a ) ) );
         assertEquals( b, getTopmostComponent( Arrays.<JComponent> asList( b ) ) );
         assertEquals( c, getTopmostComponent( Arrays.<JComponent> asList( c ) ) );
     }
-    
+
     @Test
     public void getTopmostComponent_multiple() {
         assertEquals( a, getTopmostComponent( Arrays.<JComponent> asList( a, b ) ) );
         assertEquals( b, getTopmostComponent( Arrays.<JComponent> asList( b, c ) ) );
         assertEquals( a, getTopmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
+
+    @Test
+    public void getComponentsOriginIn_failsWithNull_p1() {
+        try {
+            getComponentsOriginIn( null, new Rectangle( 0, 0, 100, 100 ) );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void getComponentsOriginIn_failsWithNull_p2() {
+        try {
+            getComponentsOriginIn( Arrays.<JComponent> asList( a ), null );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void getComponentsOriginIn_emptyList() {
+        assertEquals( Arrays.<JComponent> asList(), getComponentsOriginIn( Arrays.<JComponent> asList(), new Rectangle( 0, 0, 100, 100 ) ) );
+    }
+
+    @Test
+    public void getComponentsOriginIn_single() {
+        assertEquals( Arrays.<JComponent> asList( a ), getComponentsOriginIn( Arrays.<JComponent> asList( a ), new Rectangle( 0, 0, 100, 200 ) ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsOriginIn( Arrays.<JComponent> asList( b ), new Rectangle( 0, 0, 100, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsOriginIn( Arrays.<JComponent> asList( c ), new Rectangle( 0, 0, 100, 100 ) ) );
+    }
+
+    @Test
+    public void getComponentsOriginIn_multiple() {
+        a.setBounds( 50, 100, 500, 300 );
+        b.setBounds( 100, 105, 400, 595 );
+        c.setBounds( 0, 500, 200, 200 );
+        assertEquals( Arrays.<JComponent> asList( a, b ), getComponentsOriginIn( Arrays.<JComponent> asList( a, b ), new Rectangle( 0, 0, 200, 200 ) ) );
+        assertEquals( Arrays.<JComponent> asList( b ), getComponentsOriginIn( Arrays.<JComponent> asList( b, c ), new Rectangle( 0, 0, 200, 200 ) ) );
+        assertEquals( Arrays.<JComponent> asList( c ), getComponentsOriginIn( Arrays.<JComponent> asList( c, b, a ), new Rectangle( 0, 300, 100, 300 ) ) );
+    }
+
+    @Test
+    public void getComponentsOriginIn_boundaries() {
+        assertEquals( Arrays.<JComponent> asList( a ), getComponentsOriginIn( Arrays.<JComponent> asList( a ), new Rectangle( 50, 100, 100, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList( b ), getComponentsOriginIn( Arrays.<JComponent> asList( b ), new Rectangle( 99, 104, 100, 100 ) ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsOriginIn( Arrays.<JComponent> asList( c ), new Rectangle( 1, 501, 100, 100 ) ) );
+        // to do - far boundaries
     }
 
     @Test
