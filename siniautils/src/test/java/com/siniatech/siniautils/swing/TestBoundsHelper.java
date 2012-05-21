@@ -385,4 +385,78 @@ public class TestBoundsHelper {
         assertFalse( panel.getBounds().contains( new Point( maxX, maxY ) ) );
         assertEquals( 0, getComponentsContaining( components, new Point( maxX, maxY ) ).size() );
     }
+
+    @Test
+    public void getComponentsCrossingX_failsWithNull_p1() {
+        try {
+            getComponentsCrossingX( null, 0 );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void getComponentsCrossingX_failsWithNull_p2() {
+        try {
+            getComponentsCrossingX( Arrays.<JComponent> asList( a ), new Integer( null ) );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void getComponentsCrossingX_emptyList() {
+        assertEquals( Arrays.<JComponent> asList(), getComponentsCrossingX( Arrays.<JComponent> asList(), 0 ) );
+    }
+
+    @Test
+    public void getComponentsCrossingX_single() {
+        assertEquals( Arrays.<JComponent> asList( a ), getComponentsCrossingX( Arrays.<JComponent> asList( a ), 50 ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsCrossingX( Arrays.<JComponent> asList( b ), 90 ) );
+        assertEquals( Arrays.<JComponent> asList( c ), getComponentsCrossingX( Arrays.<JComponent> asList( c ), 50 ) );
+    }
+
+    @Test
+    public void getComponentsCrossingX_multiple() {
+        assertEquals( Arrays.<JComponent> asList( a, b ), getComponentsCrossingX( Arrays.<JComponent> asList( a, b ), 110 ) );
+        assertEquals( Arrays.<JComponent> asList( b, c ), getComponentsCrossingX( Arrays.<JComponent> asList( b, c ), 100 ) );
+        assertEquals( Arrays.<JComponent> asList( c ), getComponentsCrossingX( Arrays.<JComponent> asList( c, b, a ), 0 ) );
+    }
+
+    @Test
+    public void getComponentsCrossingY_failsWithNull_p1() {
+        try {
+            getComponentsCrossingY( null, 0 );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void getComponentsCrossingY_failsWithNull_p2() {
+        try {
+            getComponentsCrossingY( Arrays.<JComponent> asList( a ), new Integer( null ) );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void getComponentsCrossingY_emptyList() {
+        assertEquals( Arrays.<JComponent> asList(), getComponentsCrossingY( Arrays.<JComponent> asList(), 0 ) );
+    }
+
+    @Test
+    public void getComponentsCrossingY_single() {
+        assertEquals( Arrays.<JComponent> asList( a ), getComponentsCrossingY( Arrays.<JComponent> asList( a ), 105 ) );
+        assertEquals( Arrays.<JComponent> asList(), getComponentsCrossingY( Arrays.<JComponent> asList( b ), 90 ) );
+        assertEquals( Arrays.<JComponent> asList( c ), getComponentsCrossingY( Arrays.<JComponent> asList( c ), 505 ) );
+    }
+
+    @Test
+    public void getComponentsCrossingY_multiple() {
+        assertEquals( Arrays.<JComponent> asList( a, b ), getComponentsCrossingY( Arrays.<JComponent> asList( a, b ), 110 ) );
+        assertEquals( Arrays.<JComponent> asList( b ), getComponentsCrossingY( Arrays.<JComponent> asList( b, c ), 110 ) );
+        assertEquals( Arrays.<JComponent> asList( c, b ), getComponentsCrossingY( Arrays.<JComponent> asList( c, b, a ), 600 ) );
+    }
 }
