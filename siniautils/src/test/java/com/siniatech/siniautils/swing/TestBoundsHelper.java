@@ -360,7 +360,7 @@ public class TestBoundsHelper {
     }
 
     @Test
-    public void getComponentContaining_pointAtBounds() {
+    public void getComponentaContaining_pointAtBounds() {
         JPanel panel = new JPanel();
         panel.setBounds( 20, 30, 40, 50 );
         List<JPanel> components = Arrays.asList( panel );
@@ -459,4 +459,46 @@ public class TestBoundsHelper {
         assertEquals( Arrays.<JComponent> asList( b ), getComponentsCrossingY( Arrays.<JComponent> asList( b, c ), 110 ) );
         assertEquals( Arrays.<JComponent> asList( c, b ), getComponentsCrossingY( Arrays.<JComponent> asList( c, b, a ), 600 ) );
     }
+
+    @Test
+    public void getComponentContaining_failsWithNull_p1() {
+        try {
+            getComponentContaining( null, new Point( 0, 0 ) );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void getComponentContaining_failsWithNull_p2() {
+        try {
+            getComponentContaining( Arrays.<JComponent> asList( a ), null );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void getComponentContaining_emptyList() {
+        assertEquals( null, getComponentContaining( Arrays.<JComponent> asList(), new Point( 0, 0 ) ) );
+    }
+
+    @Test
+    public void getComponentContaining_single() {
+        assertEquals( a, getComponentContaining( Arrays.<JComponent> asList( a ), new Point( 50, 105 ) ) );
+        assertEquals( null, getComponentContaining( Arrays.<JComponent> asList( b ), new Point( 90, 90 ) ) );
+        assertEquals( c, getComponentContaining( Arrays.<JComponent> asList( c ), new Point( 50, 505 ) ) );
+    }
+
+    @Test
+    public void getComponentContaining_multiple() {
+        try {
+            getComponentContaining( Arrays.<JComponent> asList( a, b ), new Point( 110, 110 ) );
+            fail();
+        } catch ( Exception e ) {
+        }
+        assertEquals( b, getComponentContaining( Arrays.<JComponent> asList( b, c ), new Point( 100, 110 ) ) );
+        assertEquals( c, getComponentContaining( Arrays.<JComponent> asList( c, b, a ), new Point( 0, 600 ) ) );
+    }
+
 }

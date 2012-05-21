@@ -138,7 +138,9 @@ public class BoundsHelper {
 
     static public <T extends Component> T getComponentContaining( Collection<T> components, Point point ) {
         Collection<T> componentsContaining = getComponentsContaining( components, point );
-        assert componentsContaining.size() <= 1;
+        if ( componentsContaining.size() > 1 ) {
+            throw new IllegalStateException( "Only one component expected at " + point );
+        }
         return componentsContaining.size() == 0 ? null : CollectionHelper.getArbitraryMember( componentsContaining );
     }
 
