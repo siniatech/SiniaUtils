@@ -501,4 +501,58 @@ public class TestBoundsHelper {
         assertEquals( c, getComponentContaining( Arrays.<JComponent> asList( c, b, a ), new Point( 0, 600 ) ) );
     }
 
+    @Test
+    public void alignsVertically_failsWithNull_p1() {
+        try {
+            alignsVertically( null, new Rectangle( 100, 100 ) );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void alignsVertically_failsWithNull_p2() {
+        try {
+            alignsVertically( new Rectangle( 100, 100 ), null );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void alignsVertically_aligns() {
+        assertTrue( alignsVertically( new Rectangle( 0, 0, 100, 100 ), new Rectangle( 0, 0, 100, 100 ) ) );
+        assertTrue( alignsVertically( new Rectangle( 0, 500, 100, 100 ), new Rectangle( 0, 0, 100, 300 ) ) );
+        assertFalse( alignsVertically( new Rectangle( 500, 0, 100, 100 ), new Rectangle( 0, 0, 300, 100 ) ) );
+        assertFalse( alignsVertically( new Rectangle( 0, 0, 100, 100 ), new Rectangle( 0, 0, 99, 100 ) ) );
+        assertFalse( alignsVertically( new Rectangle( 1, 0, 100, 100 ), new Rectangle( 0, 0, 100, 100 ) ) );
+    }
+
+    @Test
+    public void alignsHorizontally_failsWithNull_p1() {
+        try {
+            alignsHorizontally( null, new Rectangle( 100, 100 ) );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void alignsHorizontally_failsWithNull_p2() {
+        try {
+            alignsHorizontally( new Rectangle( 100, 100 ), null );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void alignsHorizontally_aligns() {
+        assertTrue( alignsHorizontally( new Rectangle( 0, 0, 100, 100 ), new Rectangle( 0, 0, 100, 100 ) ) );
+        assertTrue( alignsHorizontally( new Rectangle( 500, 0, 100, 100 ), new Rectangle( 0, 0, 300, 100 ) ) );
+        assertFalse( alignsHorizontally( new Rectangle( 0, 500, 100, 100 ), new Rectangle( 0, 0, 100, 300 ) ) );
+        assertFalse( alignsHorizontally( new Rectangle( 0, 0, 100, 100 ), new Rectangle( 0, 0, 100, 99 ) ) );
+        assertFalse( alignsHorizontally( new Rectangle( 0, 1, 100, 100 ), new Rectangle( 0, 0, 100, 100 ) ) );
+    }
+
 }
