@@ -2,7 +2,6 @@ package com.siniatech.siniautils.collection;
 
 import static com.siniatech.siniautils.collection.CollectionHelper.*;
 import static com.siniatech.siniautils.fn.ConditionalHelper.*;
-import static com.siniatech.siniautils.fn.FunctionHelper.*;
 import static com.siniatech.siniautils.test.AssertHelper.*;
 import static junit.framework.Assert.*;
 
@@ -183,5 +182,5 @@ public class TestCollectionHelper {
         assertContains( a, result );
         assertContains( b, result );
     }
-    
+
 }

@@ -110,4 +110,57 @@ public class TestConditionalHelper {
         assertFalse( equalsIdentity( 9L ).apply( 1L ) );
         assertFalse( equalsIdentity( true ).apply( false ) );
     }
+
+    @Test
+    public void and_failsOnNull_p1() throws Exception {
+        try {
+            and( alwaysTrue(), null ).apply( 1 );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void and_failsOnNull_p2() throws Exception {
+        try {
+            and( null, alwaysTrue() ).apply( 1 );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void and_logic() throws Exception {
+        assertTrue( and( alwaysTrue(), alwaysTrue() ).apply( null ) );
+        assertFalse( and( alwaysFalse(), alwaysTrue() ).apply( null ) );
+        assertFalse( and( alwaysTrue(), alwaysFalse() ).apply( null ) );
+        assertFalse( and( alwaysFalse(), alwaysFalse() ).apply( null ) );
+    }
+
+    @Test
+    public void or_failsOnNull_p1() throws Exception {
+        try {
+            or( alwaysFalse(), null ).apply( 1 );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void or_failsOnNull_p2() throws Exception {
+        try {
+            or( null, alwaysTrue() ).apply( 1 );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+
+    @Test
+    public void or_logic() throws Exception {
+        assertTrue( or( alwaysTrue(), alwaysTrue() ).apply( null ) );
+        assertTrue( or( alwaysFalse(), alwaysTrue() ).apply( null ) );
+        assertTrue( or( alwaysTrue(), alwaysFalse() ).apply( null ) );
+        assertFalse( or( alwaysFalse(), alwaysFalse() ).apply( null ) );
+    }
+
 }
