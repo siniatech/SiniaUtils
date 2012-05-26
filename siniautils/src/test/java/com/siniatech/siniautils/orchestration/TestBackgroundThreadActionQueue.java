@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 import org.junit.Before;
 import org.junit.Test;
 
+// sif - haven't tested interruption
 public class TestBackgroundThreadActionQueue {
 
     private ExecutorService threadPool;
