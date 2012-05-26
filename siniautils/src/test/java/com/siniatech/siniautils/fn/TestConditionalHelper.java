@@ -139,7 +139,7 @@ public class TestConditionalHelper {
 
     @Test
     public void or_failsOnNull_p1() throws Exception {
-        try {
+try {       
             or( alwaysFalse(), null ).apply( 1 );
             fail();
         } catch ( Exception e ) {

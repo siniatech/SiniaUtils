@@ -6,7 +6,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import com.siniatech.siniautils.fn.IResponse1;
 
-public abstract class BackgroundThreadActionQueue<T> implements IResponse1<T> {
+abstract public class BackgroundThreadActionQueue<T> implements IResponse1<T> {
 
     private BlockingQueue<T> actionQueue;
 
