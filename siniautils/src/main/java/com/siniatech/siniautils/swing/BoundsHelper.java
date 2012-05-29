@@ -63,6 +63,39 @@ public class BoundsHelper {
         return topLeftComponent;
     }
 
+    static public Component getTopRightmostComponent( Collection<? extends Component> components ) {
+        Component topRightComponent = null;
+        for ( Component component : components ) {
+            Rectangle bounds = component.getBounds();
+            if ( topRightComponent == null || ( bounds.x >= topRightComponent.getBounds().x && bounds.y <= topRightComponent.getBounds().y ) ) {
+                topRightComponent = component;
+            }
+        }
+        return topRightComponent;
+    }
+
+    static public Component getBottomLeftmostComponent( Collection<? extends Component> components ) {
+        Component bottomLeftComponent = null;
+        for ( Component component : components ) {
+            Rectangle bounds = component.getBounds();
+            if ( bottomLeftComponent == null || ( bounds.x <= bottomLeftComponent.getBounds().x && bounds.y >= bottomLeftComponent.getBounds().y ) ) {
+                bottomLeftComponent = component;
+            }
+        }
+        return bottomLeftComponent;
+    }
+
+    static public Component getBottomRightmostComponent( Collection<? extends Component> components ) {
+        Component bottomRightComponent = null;
+        for ( Component component : components ) {
+            Rectangle bounds = component.getBounds();
+            if ( bottomRightComponent == null || ( bounds.x >= bottomRightComponent.getBounds().x && bounds.y >= bottomRightComponent.getBounds().y ) ) {
+                bottomRightComponent = component;
+            }
+        }
+        return bottomRightComponent;
+    }
+
     static public Component getLeftmostComponent( Collection<? extends Component> components ) {
         Component leftmostComponent = null;
         for ( Component component : components ) {

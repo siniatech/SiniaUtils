@@ -163,6 +163,89 @@ public class TestBoundsHelper {
         assertEquals( b, getTopLeftmostComponent( Arrays.<JComponent> asList( b, c ) ) );
         assertEquals( a, getTopLeftmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
     }
+    
+    @Test
+    public void getTopRightmostComponent_failsWithNull() {
+        try {
+            getTopRightmostComponent( null );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+    
+    @Test
+    public void getTopRightmostComponent_emptyList() {
+        assertEquals( null, getTopRightmostComponent( Arrays.<JComponent> asList() ) );
+    }
+    
+    @Test
+    public void getTopRightmostComponent_single() {
+        assertEquals( a, getTopRightmostComponent( Arrays.<JComponent> asList( a ) ) );
+        assertEquals( b, getTopRightmostComponent( Arrays.<JComponent> asList( b ) ) );
+        assertEquals( c, getTopRightmostComponent( Arrays.<JComponent> asList( c ) ) );
+    }
+    
+    @Test
+    public void getTopRightmostComponent_multiple() {
+        assertEquals( a, getTopRightmostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( b, getTopRightmostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( a, getTopRightmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
+    @Test
+    public void getBottomLeftmostComponent_failsWithNull() {
+        try {
+            getBottomLeftmostComponent( null );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+    
+    @Test
+    public void getBottomLeftmostComponent_emptyList() {
+        assertEquals( null, getBottomLeftmostComponent( Arrays.<JComponent> asList() ) );
+    }
+    
+    @Test
+    public void getBottomLeftmostComponent_single() {
+        assertEquals( a, getBottomLeftmostComponent( Arrays.<JComponent> asList( a ) ) );
+        assertEquals( b, getBottomLeftmostComponent( Arrays.<JComponent> asList( b ) ) );
+        assertEquals( c, getBottomLeftmostComponent( Arrays.<JComponent> asList( c ) ) );
+    }
+    
+    @Test
+    public void getBottomLeftmostComponent_multiple() {
+        assertEquals( a, getBottomLeftmostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( c, getBottomLeftmostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( c, getBottomLeftmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
+    
+    @Test
+    public void getBottomRightmostComponent_failsWithNull() {
+        try {
+            getBottomRightmostComponent( null );
+            fail();
+        } catch ( Exception e ) {
+        }
+    }
+    
+    @Test
+    public void getBottomRightmostComponent_emptyList() {
+        assertEquals( null, getBottomRightmostComponent( Arrays.<JComponent> asList() ) );
+    }
+    
+    @Test
+    public void getBottomRightmostComponent_single() {
+        assertEquals( a, getBottomRightmostComponent( Arrays.<JComponent> asList( a ) ) );
+        assertEquals( b, getBottomRightmostComponent( Arrays.<JComponent> asList( b ) ) );
+        assertEquals( c, getBottomRightmostComponent( Arrays.<JComponent> asList( c ) ) );
+    }
+    
+    @Test
+    public void getBottomRightmostComponent_multiple() {
+        assertEquals( b, getBottomRightmostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( b, getBottomRightmostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( b, getBottomRightmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
 
     @Test
     public void getLeftmostComponent_failsWithNull() {
