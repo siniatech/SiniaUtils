@@ -52,12 +52,15 @@ public class BoundsHelper {
         return maxY;
     }
 
-    /* TODO - these four 'corner' finders could prob do with more thorough testing/speccing */
+    /*
+     * TODO - these four 'corner' finders could prob do with more thorough
+     * testing/speccing
+     */
     static public Component getTopLeftmostComponent( Collection<? extends Component> components ) {
         Component topLeftComponent = null;
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
-            if ( topLeftComponent == null || ( bounds.x <= topLeftComponent.getBounds().x && bounds.y <= topLeftComponent.getBounds().y ) ) {
+            if ( topLeftComponent == null || ( bounds.getMinX() <= topLeftComponent.getBounds().getMinX() && bounds.getMinY() <= topLeftComponent.getBounds().getMinY() ) ) {
                 topLeftComponent = component;
             }
         }
@@ -68,7 +71,7 @@ public class BoundsHelper {
         Component topRightComponent = null;
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
-            if ( topRightComponent == null || ( bounds.x >= topRightComponent.getBounds().x && bounds.y <= topRightComponent.getBounds().y ) ) {
+            if ( topRightComponent == null || ( bounds.getMaxX() >= topRightComponent.getBounds().getMinX() && bounds.getMinY() <= topRightComponent.getBounds().getMinY() ) ) {
                 topRightComponent = component;
             }
         }
@@ -79,7 +82,7 @@ public class BoundsHelper {
         Component bottomLeftComponent = null;
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
-            if ( bottomLeftComponent == null || ( bounds.x <= bottomLeftComponent.getBounds().x && bounds.y >= bottomLeftComponent.getBounds().y ) ) {
+            if ( bottomLeftComponent == null || ( bounds.getMinX() <= bottomLeftComponent.getBounds().getMinX() && bounds.getMaxY() >= bottomLeftComponent.getBounds().getMaxY() ) ) {
                 bottomLeftComponent = component;
             }
         }
@@ -90,7 +93,7 @@ public class BoundsHelper {
         Component bottomRightComponent = null;
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
-            if ( bottomRightComponent == null || ( bounds.x >= bottomRightComponent.getBounds().x && bounds.y >= bottomRightComponent.getBounds().y ) ) {
+            if ( bottomRightComponent == null || ( bounds.getMaxX() >= bottomRightComponent.getBounds().getMaxX() && bounds.getMaxY() >= bottomRightComponent.getBounds().getMaxY() ) ) {
                 bottomRightComponent = component;
             }
         }
