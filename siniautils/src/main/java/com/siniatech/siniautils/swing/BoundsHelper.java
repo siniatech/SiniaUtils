@@ -52,6 +52,7 @@ public class BoundsHelper {
         return maxY;
     }
 
+    /* TODO - these four 'corner' finders could prob do with more thorough testing/speccing */
     static public Component getTopLeftmostComponent( Collection<? extends Component> components ) {
         Component topLeftComponent = null;
         for ( Component component : components ) {
