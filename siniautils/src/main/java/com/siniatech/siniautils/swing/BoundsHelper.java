@@ -56,11 +56,32 @@ public class BoundsHelper {
      * TODO - these four 'corner' finders could prob do with more thorough
      * testing/speccing
      */
+    /**
+     * Gets the leftmost component - when more than one chooses the topmost
+     */
     static public Component getTopLeftmostComponent( Collection<? extends Component> components ) {
         Component topLeftComponent = null;
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
-            if ( topLeftComponent == null || ( bounds.getMinX() <= topLeftComponent.getBounds().getMinX() && bounds.getMinY() <= topLeftComponent.getBounds().getMinY() ) ) {
+            if ( topLeftComponent == null || //
+                bounds.getMinX() < topLeftComponent.getBounds().getMinX() || //
+                ( bounds.getMinX() == topLeftComponent.getBounds().getMinX() && bounds.getMinY() < topLeftComponent.getBounds().getMinY() ) ) {
+                topLeftComponent = component;
+            }
+        }
+        return topLeftComponent;
+    }
+
+    /**
+     * Gets the topmost component - when more than one chooses the leftmost
+     */
+    static public Component getLeftTopmostComponent( Collection<? extends Component> components ) {
+        Component topLeftComponent = null;
+        for ( Component component : components ) {
+            Rectangle bounds = component.getBounds();
+            if ( topLeftComponent == null || //
+                bounds.getMinY() < topLeftComponent.getBounds().getMinY() || //
+                ( bounds.getMinX() < topLeftComponent.getBounds().getMinX() && bounds.getMinY() == topLeftComponent.getBounds().getMinY() ) ) {
                 topLeftComponent = component;
             }
         }
@@ -104,9 +125,9 @@ public class BoundsHelper {
         Component leftmostComponent = null;
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
-            if ( leftmostComponent == null || bounds.x <= leftmostComponent.getBounds().x ) {
-                leftmostComponent = component;
-            }
+            if ( leftmostComponent == null || bounds.x < leftmostComponent.getBounds().x ) {
+               leftmostComponent = component;
+            } 
         }
         return leftmostComponent;
     }
