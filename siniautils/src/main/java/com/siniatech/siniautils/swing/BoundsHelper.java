@@ -52,6 +52,38 @@ public class BoundsHelper {
         return maxY;
     }
 
+    private static boolean hasSameTop( Component comp, Rectangle bounds ) {
+        return comp != null && bounds.getMinY() == comp.getBounds().getMinY();
+    }
+
+    private static boolean hasSameLeft( Component comp, Rectangle bounds ) {
+        return comp != null && bounds.getMinX() == comp.getBounds().getMinX();
+    }
+
+    private static boolean hasSameRight( Component comp, Rectangle bounds ) {
+        return comp != null && bounds.getMaxX() == comp.getBounds().getMaxX();
+    }
+
+    private static boolean hasSameBottom( Component comp, Rectangle bounds ) {
+        return comp != null && bounds.getMaxY() == comp.getBounds().getMaxY();
+    }
+
+    private static boolean hasSameTopLeft( Component comp, Rectangle bounds ) {
+        return comp != null && hasSameLeft( comp, bounds ) && hasSameTop( comp, bounds );
+    }
+
+    private static boolean hasSameTopRight( Component comp, Rectangle bounds ) {
+        return comp != null && hasSameRight( comp, bounds ) && hasSameTop( comp, bounds );
+    }
+
+    private static boolean hasSameBottomLeft( Component comp, Rectangle bounds ) {
+        return comp != null && hasSameLeft( comp, bounds ) && hasSameBottom( comp, bounds );
+    }
+
+    private static boolean hasSameBottomRight( Component comp, Rectangle bounds ) {
+        return comp != null && hasSameRight( comp, bounds ) && hasSameBottom( comp, bounds );
+    }
+
     /**
      * Gets the leftmost component - when more than one chooses the topmost
      */
@@ -62,13 +94,13 @@ public class BoundsHelper {
             Rectangle bounds = component.getBounds();
             if ( topLeftComponent == null || //
                 bounds.getMinX() < topLeftComponent.getBounds().getMinX() || //
-                ( bounds.getMinX() == topLeftComponent.getBounds().getMinX() && bounds.getMinY() <= topLeftComponent.getBounds().getMinY() ) ) {
-                haveMoreThanOneResult = topLeftComponent != null && bounds.getMinY() == topLeftComponent.getBounds().getMinY();
+                ( hasSameLeft( topLeftComponent, bounds ) && bounds.getMinY() <= topLeftComponent.getBounds().getMinY() ) ) {
+                haveMoreThanOneResult = hasSameTopLeft( topLeftComponent, bounds );
                 topLeftComponent = component;
             }
         }
         if ( haveMoreThanOneResult ) {
-            throw new IllegalArgumentException( "More than one valid result found" );
+            throw new IllegalArgumentException( "More than one valid result found" + components );
         }
         return topLeftComponent;
     }
@@ -83,8 +115,8 @@ public class BoundsHelper {
             Rectangle bounds = component.getBounds();
             if ( topLeftComponent == null || //
                 bounds.getMinY() < topLeftComponent.getBounds().getMinY() || //
-                ( bounds.getMinX() <= topLeftComponent.getBounds().getMinX() && bounds.getMinY() == topLeftComponent.getBounds().getMinY() ) ) {
-                haveMoreThanOneResult = topLeftComponent != null && bounds.getMinX() == topLeftComponent.getBounds().getMinX();
+                ( bounds.getMinX() <= topLeftComponent.getBounds().getMinX() && hasSameTop( topLeftComponent, bounds ) ) ) {
+                haveMoreThanOneResult = hasSameTopLeft( topLeftComponent, bounds );
                 topLeftComponent = component;
             }
             if ( haveMoreThanOneResult ) {
@@ -104,8 +136,8 @@ public class BoundsHelper {
             Rectangle bounds = component.getBounds();
             if ( topRightComponent == null || //
                 bounds.getMaxX() > topRightComponent.getBounds().getMaxX() || //
-                ( bounds.getMaxX() == topRightComponent.getBounds().getMaxX() && bounds.getMinY() <= topRightComponent.getBounds().getMinY() ) ) {
-                haveMoreThanOneResult = topRightComponent != null && bounds.getMinY() == topRightComponent.getBounds().getMinY();
+                ( hasSameRight( topRightComponent, bounds ) && bounds.getMinY() <= topRightComponent.getBounds().getMinY() ) ) {
+                haveMoreThanOneResult = hasSameTopRight( topRightComponent, bounds );
                 topRightComponent = component;
             }
         }
@@ -125,8 +157,8 @@ public class BoundsHelper {
             Rectangle bounds = component.getBounds();
             if ( topRightComponent == null || //
                 bounds.getMinY() < topRightComponent.getBounds().getMinY() || //
-                ( bounds.getMaxX() >= topRightComponent.getBounds().getMaxX() && bounds.getMinY() == topRightComponent.getBounds().getMinY() ) ) {
-                haveMoreThanOneResult = topRightComponent != null && bounds.getMaxX() == topRightComponent.getBounds().getMaxX();
+                ( bounds.getMaxX() >= topRightComponent.getBounds().getMaxX() && hasSameTop( topRightComponent, bounds ) ) ) {
+                haveMoreThanOneResult = hasSameTopRight( topRightComponent, bounds );
                 topRightComponent = component;
             }
             if ( haveMoreThanOneResult ) {
@@ -146,8 +178,8 @@ public class BoundsHelper {
             Rectangle bounds = component.getBounds();
             if ( bottomLeftComponent == null || //
                 bounds.getMinX() < bottomLeftComponent.getBounds().getMinX() || //
-                ( bounds.getMinX() == bottomLeftComponent.getBounds().getMinX() && bounds.getMaxY() >= bottomLeftComponent.getBounds().getMaxY() ) ) {
-                haveMoreThanOneResult = bottomLeftComponent != null && bounds.getMaxY() == bottomLeftComponent.getBounds().getMaxY();
+                ( hasSameLeft( bottomLeftComponent, bounds ) && bounds.getMaxY() >= bottomLeftComponent.getBounds().getMaxY() ) ) {
+                haveMoreThanOneResult = hasSameBottomLeft( bottomLeftComponent, bounds );
                 bottomLeftComponent = component;
             }
         }
@@ -166,9 +198,9 @@ public class BoundsHelper {
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
             if ( bottomLeftComponent == null || //
-                bounds.getMaxY() < bottomLeftComponent.getBounds().getMaxY() || //
-                ( bounds.getMinX() <= bottomLeftComponent.getBounds().getMinX() && bounds.getMaxY() == bottomLeftComponent.getBounds().getMaxY() ) ) {
-                haveMoreThanOneResult = bottomLeftComponent != null && bounds.getMinX() == bottomLeftComponent.getBounds().getMinX();
+                bounds.getMaxY() > bottomLeftComponent.getBounds().getMaxY() || //
+                ( bounds.getMinX() <= bottomLeftComponent.getBounds().getMinX() && hasSameBottom( bottomLeftComponent, bounds ) ) ) {
+                haveMoreThanOneResult = hasSameBottomLeft( bottomLeftComponent, bounds );
                 bottomLeftComponent = component;
             }
             if ( haveMoreThanOneResult ) {
@@ -188,8 +220,8 @@ public class BoundsHelper {
             Rectangle bounds = component.getBounds();
             if ( bottomRightComponent == null || //
                 bounds.getMaxX() > bottomRightComponent.getBounds().getMaxX() || //
-                ( bounds.getMaxX() == bottomRightComponent.getBounds().getMaxX() && bounds.getMaxY() >= bottomRightComponent.getBounds().getMaxY() ) ) {
-                haveMoreThanOneResult = bottomRightComponent != null && bounds.getMaxY() == bottomRightComponent.getBounds().getMaxY();
+                ( hasSameRight( bottomRightComponent, bounds ) && bounds.getMaxY() >= bottomRightComponent.getBounds().getMaxY() ) ) {
+                haveMoreThanOneResult = hasSameBottomRight( bottomRightComponent, bounds );
                 bottomRightComponent = component;
             }
         }
@@ -208,9 +240,9 @@ public class BoundsHelper {
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
             if ( bottomRightComponent == null || //
-                bounds.getMaxY() < bottomRightComponent.getBounds().getMaxY() || //
-                ( bounds.getMaxX() >= bottomRightComponent.getBounds().getMaxX() && bounds.getMaxY() == bottomRightComponent.getBounds().getMaxY() ) ) {
-                haveMoreThanOneResult = bottomRightComponent != null && bounds.getMaxX() == bottomRightComponent.getBounds().getMaxX();
+                bounds.getMaxY() > bottomRightComponent.getBounds().getMaxY() || //
+                ( bounds.getMaxX() >= bottomRightComponent.getBounds().getMaxX() && hasSameBottom( bottomRightComponent, bounds ) ) ) {
+                haveMoreThanOneResult = hasSameBottomRight( bottomRightComponent, bounds );
                 bottomRightComponent = component;
             }
             if ( haveMoreThanOneResult ) {

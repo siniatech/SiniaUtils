@@ -101,6 +101,16 @@ public class TestBoundsHelper_XMostComponent {
         assertEquals( c, getTopLeftmostComponent( Arrays.<JComponent> asList( b, c ) ) );
         assertEquals( c, getTopLeftmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
     }
+    
+    @Test
+    public void getTopLeftmostComponent_returnsLeftmostOfEqualTopmost() {
+        a.setBounds( 10, 0, 50, 10 );
+        b.setBounds( 5, 0, 75, 35 );
+        c.setBounds( 0, 0, 75, 60 );
+        assertEquals( b, getTopLeftmostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( c, getTopLeftmostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( c, getTopLeftmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
 
     @Test
     public void getLeftTopmostComponent_failsWithNull() {
@@ -172,6 +182,16 @@ public class TestBoundsHelper_XMostComponent {
         a.setBounds( 100, 0, 50, 50 );
         b.setBounds( 75, 0, 75, 100 );
         c.setBounds( 50, 0, 75, 100 );
+        assertEquals( b, getLeftTopmostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( c, getLeftTopmostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( c, getLeftTopmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
+    
+    @Test
+    public void getLeftTopmostComponent_returnsTopmostOfEqualLeftmost() {
+        a.setBounds( 0, 10, 50, 50 );
+        b.setBounds( 0, 5, 75, 100 );
+        c.setBounds( 0, 0, 75, 100 );
         assertEquals( b, getLeftTopmostComponent( Arrays.<JComponent> asList( a, b ) ) );
         assertEquals( c, getLeftTopmostComponent( Arrays.<JComponent> asList( b, c ) ) );
         assertEquals( c, getLeftTopmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
@@ -251,6 +271,16 @@ public class TestBoundsHelper_XMostComponent {
         assertEquals( b, getTopRightmostComponent( Arrays.<JComponent> asList( b, c ) ) );
         assertEquals( a, getTopRightmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
     }
+    
+    @Test
+    public void getTopRightmostComponent_returnsRightmostOfEqualTopmost() {
+        a.setBounds( 0, 0, 65, 50 );
+        b.setBounds( 0, 0, 75, 100 );
+        c.setBounds( 0, 0, 85, 100 );
+        assertEquals( b, getTopRightmostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( c, getTopRightmostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( c, getTopRightmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
 
     @Test
     public void getRightTopmostComponent_failsWithNull() {
@@ -322,6 +352,16 @@ public class TestBoundsHelper_XMostComponent {
         a.setBounds( 10, 0, 75, 50 );
         b.setBounds( 75, 0, 75, 100 );
         c.setBounds( 150, 0, 75, 100 );
+        assertEquals( b, getRightTopmostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( c, getRightTopmostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( c, getRightTopmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
+    
+    @Test
+    public void getRightTopmostComponent_returnsTopmostOfEqualRightmost() {
+        a.setBounds( 0, 10, 75, 50 );
+        b.setBounds( 0, 5, 75, 100 );
+        c.setBounds( 0, 0, 75, 100 );
         assertEquals( b, getRightTopmostComponent( Arrays.<JComponent> asList( a, b ) ) );
         assertEquals( c, getRightTopmostComponent( Arrays.<JComponent> asList( b, c ) ) );
         assertEquals( c, getRightTopmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
@@ -401,6 +441,16 @@ public class TestBoundsHelper_XMostComponent {
         assertEquals( c, getBottomLeftmostComponent( Arrays.<JComponent> asList( b, c ) ) );
         assertEquals( c, getBottomLeftmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
     }
+    
+    @Test
+    public void getBottomLeftmostComponent_returnsLeftmostOfEqualBottommost() {
+        a.setBounds( 10, 0, 50, 100 );
+        b.setBounds( 5, 0, 75, 100 );
+        c.setBounds( 0, 0, 75, 100 );
+        assertEquals( b, getBottomLeftmostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( c, getBottomLeftmostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( c, getBottomLeftmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
 
     @Test
     public void getLeftBottommostComponent_failsWithNull() {
@@ -449,9 +499,9 @@ public class TestBoundsHelper_XMostComponent {
 
     @Test
     public void getLeftBottommostComponent_multiple() {
-        a.setBounds( 0, 0, 50, 50 );
+        a.setBounds( 0, 50, 50, 100 );
         b.setBounds( 25, 25, 75, 100 );
-        c.setBounds( 50, 50, 75, 100 );
+        c.setBounds( 50, 0, 75, 100 );
         assertEquals( a, getLeftBottommostComponent( Arrays.<JComponent> asList( a, b ) ) );
         assertEquals( b, getLeftBottommostComponent( Arrays.<JComponent> asList( b, c ) ) );
         assertEquals( a, getLeftBottommostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
@@ -459,12 +509,12 @@ public class TestBoundsHelper_XMostComponent {
 
     @Test
     public void getLeftBottommostComponent_alwaysReturnsBottommost() {
-        a.setBounds( 100, 0, 50, 50 );
+        a.setBounds( 100, 0, 50, 100 );
         b.setBounds( 70, 1, 75, 100 );
         c.setBounds( 35, 2, 75, 100 );
-        assertEquals( a, getLeftBottommostComponent( Arrays.<JComponent> asList( a, b ) ) );
-        assertEquals( b, getLeftBottommostComponent( Arrays.<JComponent> asList( b, c ) ) );
-        assertEquals( a, getLeftBottommostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+        assertEquals( b, getLeftBottommostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( c, getLeftBottommostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( c, getLeftBottommostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
     }
 
     @Test
@@ -472,6 +522,16 @@ public class TestBoundsHelper_XMostComponent {
         a.setBounds( 100, 0, 50, 100 );
         b.setBounds( 75, 0, 75, 100 );
         c.setBounds( 50, 0, 75, 100 );
+        assertEquals( b, getLeftBottommostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( c, getLeftBottommostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( c, getLeftBottommostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
+    
+    @Test
+    public void getLeftBottommostComponent_returnsBottommostOfEqualLeftmost() {
+        a.setBounds( 0, 0, 50, 100 );
+        b.setBounds( 0, 50, 75, 100 );
+        c.setBounds( 0, 100, 75, 100 );
         assertEquals( b, getLeftBottommostComponent( Arrays.<JComponent> asList( a, b ) ) );
         assertEquals( c, getLeftBottommostComponent( Arrays.<JComponent> asList( b, c ) ) );
         assertEquals( c, getLeftBottommostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
@@ -551,6 +611,16 @@ public class TestBoundsHelper_XMostComponent {
         assertEquals( c, getBottomRightmostComponent( Arrays.<JComponent> asList( b, c ) ) );
         assertEquals( c, getBottomRightmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
     }
+    
+    @Test
+    public void getBottomRightmostComponent_returnsRightmostOfEqualBottommost() {
+        a.setBounds( 0, 0, 75, 100 );
+        b.setBounds( 0, 0, 85, 100 );
+        c.setBounds( 0, 0, 95, 100 );
+        assertEquals( b, getBottomRightmostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( c, getBottomRightmostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( c, getBottomRightmostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
 
     @Test
     public void getRightBottommostComponent_failsWithNull() {
@@ -602,9 +672,9 @@ public class TestBoundsHelper_XMostComponent {
         a.setBounds( 20, 0, 150, 50 );
         b.setBounds( 20, 25, 75, 100 );
         c.setBounds( 20, 50, 10, 100 );
-        assertEquals( a, getRightBottommostComponent( Arrays.<JComponent> asList( a, b ) ) );
-        assertEquals( b, getRightBottommostComponent( Arrays.<JComponent> asList( b, c ) ) );
-        assertEquals( a, getRightBottommostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+        assertEquals( b, getRightBottommostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( c, getRightBottommostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( c, getRightBottommostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
     }
 
     @Test
@@ -612,9 +682,9 @@ public class TestBoundsHelper_XMostComponent {
         a.setBounds( 100, 0, 50, 100 );
         b.setBounds( 70, 1, 75, 100 );
         c.setBounds( 35, 2, 75, 100 );
-        assertEquals( a, getRightBottommostComponent( Arrays.<JComponent> asList( a, b ) ) );
-        assertEquals( b, getRightBottommostComponent( Arrays.<JComponent> asList( b, c ) ) );
-        assertEquals( a, getRightBottommostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+        assertEquals( b, getRightBottommostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( c, getRightBottommostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( c, getRightBottommostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
     }
 
     @Test
@@ -622,6 +692,16 @@ public class TestBoundsHelper_XMostComponent {
         a.setBounds( 10, 0, 75, 100 );
         b.setBounds( 75, 0, 75, 100 );
         c.setBounds( 150, 0, 75, 100 );
+        assertEquals( b, getRightBottommostComponent( Arrays.<JComponent> asList( a, b ) ) );
+        assertEquals( c, getRightBottommostComponent( Arrays.<JComponent> asList( b, c ) ) );
+        assertEquals( c, getRightBottommostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
+    }
+    
+    @Test
+    public void getRightBottommostComponent_returnsBottommostOfEqualRightmost() {
+        a.setBounds( 0, 0, 75, 100 );
+        b.setBounds( 0, 0, 75, 200 );
+        c.setBounds( 0, 0, 75, 300 );
         assertEquals( b, getRightBottommostComponent( Arrays.<JComponent> asList( a, b ) ) );
         assertEquals( c, getRightBottommostComponent( Arrays.<JComponent> asList( b, c ) ) );
         assertEquals( c, getRightBottommostComponent( Arrays.<JComponent> asList( a, b, c ) ) );
