@@ -52,22 +52,23 @@ public class BoundsHelper {
         return maxY;
     }
 
-    /*
-     * TODO - these four 'corner' finders could prob do with more thorough
-     * testing/speccing
-     */
     /**
      * Gets the leftmost component - when more than one chooses the topmost
      */
     static public Component getTopLeftmostComponent( Collection<? extends Component> components ) {
         Component topLeftComponent = null;
+        boolean haveMoreThanOneResult = false;
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
             if ( topLeftComponent == null || //
                 bounds.getMinX() < topLeftComponent.getBounds().getMinX() || //
-                ( bounds.getMinX() == topLeftComponent.getBounds().getMinX() && bounds.getMinY() < topLeftComponent.getBounds().getMinY() ) ) {
+                ( bounds.getMinX() == topLeftComponent.getBounds().getMinX() && bounds.getMinY() <= topLeftComponent.getBounds().getMinY() ) ) {
+                haveMoreThanOneResult = topLeftComponent != null && bounds.getMinY() == topLeftComponent.getBounds().getMinY();
                 topLeftComponent = component;
             }
+        }
+        if ( haveMoreThanOneResult ) {
+            throw new IllegalArgumentException( "More than one valid result found" );
         }
         return topLeftComponent;
     }
@@ -77,45 +78,143 @@ public class BoundsHelper {
      */
     static public Component getLeftTopmostComponent( Collection<? extends Component> components ) {
         Component topLeftComponent = null;
+        boolean haveMoreThanOneResult = false;
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
             if ( topLeftComponent == null || //
                 bounds.getMinY() < topLeftComponent.getBounds().getMinY() || //
-                ( bounds.getMinX() < topLeftComponent.getBounds().getMinX() && bounds.getMinY() == topLeftComponent.getBounds().getMinY() ) ) {
+                ( bounds.getMinX() <= topLeftComponent.getBounds().getMinX() && bounds.getMinY() == topLeftComponent.getBounds().getMinY() ) ) {
+                haveMoreThanOneResult = topLeftComponent != null && bounds.getMinX() == topLeftComponent.getBounds().getMinX();
                 topLeftComponent = component;
+            }
+            if ( haveMoreThanOneResult ) {
+                throw new IllegalArgumentException( "More than one valid result found" );
             }
         }
         return topLeftComponent;
     }
 
+    /**
+     * Gets the rightmost component - when more than one chooses the topmost
+     */
     static public Component getTopRightmostComponent( Collection<? extends Component> components ) {
         Component topRightComponent = null;
+        boolean haveMoreThanOneResult = false;
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
-            if ( topRightComponent == null || ( bounds.getMaxX() >= topRightComponent.getBounds().getMinX() && bounds.getMinY() <= topRightComponent.getBounds().getMinY() ) ) {
+            if ( topRightComponent == null || //
+                bounds.getMaxX() > topRightComponent.getBounds().getMaxX() || //
+                ( bounds.getMaxX() == topRightComponent.getBounds().getMaxX() && bounds.getMinY() <= topRightComponent.getBounds().getMinY() ) ) {
+                haveMoreThanOneResult = topRightComponent != null && bounds.getMinY() == topRightComponent.getBounds().getMinY();
                 topRightComponent = component;
+            }
+        }
+        if ( haveMoreThanOneResult ) {
+            throw new IllegalArgumentException( "More than one valid result found" );
+        }
+        return topRightComponent;
+    }
+
+    /**
+     * Gets the topmost component - when more than one chooses the rightmost
+     */
+    static public Component getRightTopmostComponent( Collection<? extends Component> components ) {
+        Component topRightComponent = null;
+        boolean haveMoreThanOneResult = false;
+        for ( Component component : components ) {
+            Rectangle bounds = component.getBounds();
+            if ( topRightComponent == null || //
+                bounds.getMinY() < topRightComponent.getBounds().getMinY() || //
+                ( bounds.getMaxX() >= topRightComponent.getBounds().getMaxX() && bounds.getMinY() == topRightComponent.getBounds().getMinY() ) ) {
+                haveMoreThanOneResult = topRightComponent != null && bounds.getMaxX() == topRightComponent.getBounds().getMaxX();
+                topRightComponent = component;
+            }
+            if ( haveMoreThanOneResult ) {
+                throw new IllegalArgumentException( "More than one valid result found" );
             }
         }
         return topRightComponent;
     }
 
+    /**
+     * Gets the leftmost component - when more than one chooses the bottommost
+     */
     static public Component getBottomLeftmostComponent( Collection<? extends Component> components ) {
         Component bottomLeftComponent = null;
+        boolean haveMoreThanOneResult = false;
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
-            if ( bottomLeftComponent == null || ( bounds.getMinX() <= bottomLeftComponent.getBounds().getMinX() && bounds.getMaxY() >= bottomLeftComponent.getBounds().getMaxY() ) ) {
+            if ( bottomLeftComponent == null || //
+                bounds.getMinX() < bottomLeftComponent.getBounds().getMinX() || //
+                ( bounds.getMinX() == bottomLeftComponent.getBounds().getMinX() && bounds.getMaxY() >= bottomLeftComponent.getBounds().getMaxY() ) ) {
+                haveMoreThanOneResult = bottomLeftComponent != null && bounds.getMaxY() == bottomLeftComponent.getBounds().getMaxY();
                 bottomLeftComponent = component;
+            }
+        }
+        if ( haveMoreThanOneResult ) {
+            throw new IllegalArgumentException( "More than one valid result found" );
+        }
+        return bottomLeftComponent;
+    }
+
+    /**
+     * Gets the bottommost component - when more than one chooses the leftmost
+     */
+    static public Component getLeftBottommostComponent( Collection<? extends Component> components ) {
+        Component bottomLeftComponent = null;
+        boolean haveMoreThanOneResult = false;
+        for ( Component component : components ) {
+            Rectangle bounds = component.getBounds();
+            if ( bottomLeftComponent == null || //
+                bounds.getMaxY() < bottomLeftComponent.getBounds().getMaxY() || //
+                ( bounds.getMinX() <= bottomLeftComponent.getBounds().getMinX() && bounds.getMaxY() == bottomLeftComponent.getBounds().getMaxY() ) ) {
+                haveMoreThanOneResult = bottomLeftComponent != null && bounds.getMinX() == bottomLeftComponent.getBounds().getMinX();
+                bottomLeftComponent = component;
+            }
+            if ( haveMoreThanOneResult ) {
+                throw new IllegalArgumentException( "More than one valid result found" );
             }
         }
         return bottomLeftComponent;
     }
 
+    /**
+     * Gets the rightmost component - when more than one chooses the bottommost
+     */
     static public Component getBottomRightmostComponent( Collection<? extends Component> components ) {
         Component bottomRightComponent = null;
+        boolean haveMoreThanOneResult = false;
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
-            if ( bottomRightComponent == null || ( bounds.getMaxX() >= bottomRightComponent.getBounds().getMaxX() && bounds.getMaxY() >= bottomRightComponent.getBounds().getMaxY() ) ) {
+            if ( bottomRightComponent == null || //
+                bounds.getMaxX() > bottomRightComponent.getBounds().getMaxX() || //
+                ( bounds.getMaxX() == bottomRightComponent.getBounds().getMaxX() && bounds.getMaxY() >= bottomRightComponent.getBounds().getMaxY() ) ) {
+                haveMoreThanOneResult = bottomRightComponent != null && bounds.getMaxY() == bottomRightComponent.getBounds().getMaxY();
                 bottomRightComponent = component;
+            }
+        }
+        if ( haveMoreThanOneResult ) {
+            throw new IllegalArgumentException( "More than one valid result found" );
+        }
+        return bottomRightComponent;
+    }
+
+    /**
+     * Gets the bottommost component - when more than one chooses the rightmost
+     */
+    static public Component getRightBottommostComponent( Collection<? extends Component> components ) {
+        Component bottomRightComponent = null;
+        boolean haveMoreThanOneResult = false;
+        for ( Component component : components ) {
+            Rectangle bounds = component.getBounds();
+            if ( bottomRightComponent == null || //
+                bounds.getMaxY() < bottomRightComponent.getBounds().getMaxY() || //
+                ( bounds.getMaxX() >= bottomRightComponent.getBounds().getMaxX() && bounds.getMaxY() == bottomRightComponent.getBounds().getMaxY() ) ) {
+                haveMoreThanOneResult = bottomRightComponent != null && bounds.getMaxX() == bottomRightComponent.getBounds().getMaxX();
+                bottomRightComponent = component;
+            }
+            if ( haveMoreThanOneResult ) {
+                throw new IllegalArgumentException( "More than one valid result found" );
             }
         }
         return bottomRightComponent;
@@ -123,22 +222,32 @@ public class BoundsHelper {
 
     static public Component getLeftmostComponent( Collection<? extends Component> components ) {
         Component leftmostComponent = null;
+        boolean haveMoreThanOneResult = false;
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
-            if ( leftmostComponent == null || bounds.x < leftmostComponent.getBounds().x ) {
-               leftmostComponent = component;
-            } 
+            if ( leftmostComponent == null || bounds.x <= leftmostComponent.getBounds().x ) {
+                haveMoreThanOneResult = leftmostComponent != null && bounds.x == leftmostComponent.getBounds().x;
+                leftmostComponent = component;
+            }
+        }
+        if ( haveMoreThanOneResult ) {
+            throw new IllegalArgumentException( "More than one valid result found" );
         }
         return leftmostComponent;
     }
 
     static public Component getTopmostComponent( Collection<? extends Component> components ) {
         Component topmostComponent = null;
+        boolean haveMoreThanOneResult = false;
         for ( Component component : components ) {
             Rectangle bounds = component.getBounds();
             if ( topmostComponent == null || bounds.y <= topmostComponent.getBounds().y ) {
+                haveMoreThanOneResult = topmostComponent != null && bounds.y == topmostComponent.getBounds().y;
                 topmostComponent = component;
             }
+        }
+        if ( haveMoreThanOneResult ) {
+            throw new IllegalArgumentException( "More than one valid result found" );
         }
         return topmostComponent;
     }
