@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.siniatech</groupId>
-	<artifactId>siniautils</artifactId>
+	<artifactId>siniautils-db-oracle</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<name>${project.artifactId}</name>
-	<description>Sinia utility classes</description>
-	<inceptionYear>2011</inceptionYear>
+	<description>Sinia Oracle utility classes</description>
+	<inceptionYear>2012</inceptionYear>
 
 	<properties>
 		<maven.compiler.source>1.7</maven.compiler.source>
@@ -21,14 +21,13 @@
 			<version>4.10</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>1.6</version>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0.3</version>
 		</dependency>
-		
 	</dependencies>
-	
-		<reporting>
+
+	<reporting>
 		<plugins>
 			<plugin>
 				<groupId>org.jacoco</groupId>
