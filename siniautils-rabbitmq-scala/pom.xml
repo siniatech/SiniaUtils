@@ -1,14 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.siniatech</groupId>
-  <artifactId>siniautils-rabbitmq-scala</artifactId>
-  <version>0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+	<groupId>com.siniatech</groupId>
+	<artifactId>siniautils-rabbitmq-scala</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-  <name>siniautils-rabbitmq-scala</name>
-  <url>http://maven.apache.org</url>
+	<name>siniautils-rabbitmq-scala</name>
 
 	<properties>
 		<maven.compiler.source>1.5</maven.compiler.source>
@@ -79,6 +78,7 @@
 					<!-- useManifestOnlyJar>false</useManifestOnlyJar -->
 					<includes>
 						<include>**/*Test.*</include>
+						<include>**/Test*.*</include>
 						<include>**/*Suite.*</include>
 					</includes>
 				</configuration>
@@ -121,4 +121,3 @@
 		</pluginManagement>
 	</build>
 </project>
-
