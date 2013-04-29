@@ -9,15 +9,16 @@ import java.awt.LayoutManager;
 import javax.swing.JComponent;
 import javax.swing.border.Border;
 
-public class VerticalListLayoutManager implements LayoutManager {
+public class HorizontalListLayout implements LayoutManager {
 
     private static final Insets EMPTY_INSETS = new Insets( 0, 0, 0, 0 );
     private final int hGap;
 
-    public VerticalListLayoutManager() {
-        this(0);
+    public HorizontalListLayout() {
+        this( 0 );
     }
-    public VerticalListLayoutManager(int hGap) {
+
+    public HorizontalListLayout( int hGap ) {
         this.hGap = hGap;
     }
 
@@ -32,11 +33,13 @@ public class VerticalListLayoutManager implements LayoutManager {
     @Override
     public Dimension preferredLayoutSize( Container parent ) {
         Insets borderInsets = getBorderInsets( parent );
-        int w = parent.getWidth();
+        int h = parent.getHeight();
         Component[] components = parent.getComponents();
-        int h = borderInsets.top + borderInsets.bottom;
+        int w = borderInsets.left + borderInsets.right;
         for ( int i = 0; i < components.length; i++ ) {
-            h += components[i].getPreferredSize().height;
+            Dimension preferredSize = components[i].getPreferredSize();
+            h = preferredSize.height > h ? preferredSize.height : h;
+            w += preferredSize.width + hGap;
         }
         return new Dimension( w, h );
     }
@@ -50,15 +53,15 @@ public class VerticalListLayoutManager implements LayoutManager {
     public void layoutContainer( Container parent ) {
         Insets borderInsets = getBorderInsets( parent );
         int x = borderInsets.left;
-        int w = parent.getWidth() - x - borderInsets.right;
         int y = borderInsets.top;
+        int h = preferredLayoutSize( parent ).height - y - borderInsets.bottom;
         Component[] components = parent.getComponents();
         for ( int i = 0; i < components.length; i++ ) {
             Component component = components[i];
-            int h = component.getPreferredSize().height;
+            int w = component.getPreferredSize().width;
             component.setBounds( x, y, w, h );
-            y += h;
-            y += hGap;
+            x += w;
+            x += hGap;
         }
     }
 
