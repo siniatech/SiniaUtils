@@ -22,7 +22,7 @@ public class AutoSizeGridLayoutTest {
 				JFrame frame = new JFrame();
 				JPanel panel = new JPanel();
 				frame.add(panel);
-				panel.setLayout(new AutoSizeGridLayout(3));
+				panel.setLayout(new AutoSizeGridLayout(3,10,10));
 				panel.add(b(new JLabel("Hello"), Color.black));
 				panel.add(b(new JLabel("A"), Color.blue));
 				panel.add(b(new JTextArea(5, 30), Color.cyan));

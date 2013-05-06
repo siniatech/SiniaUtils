@@ -100,22 +100,21 @@ public class AutoSizeGridLayout implements LayoutManager {
 		}
 
 		private int getX(Point gridPosition) {
-			return borderInsets.left + sumValues(columnWidths, hGap, gridPosition.x)
-					+ hGap;
+			return borderInsets.left + sumValues(columnWidths, hGap, gridPosition.x);
 		}
 
 		private int getY(Point gridPosition) {
-			return borderInsets.top + sumValues(rowHeights, vGap, gridPosition.y) + vGap;
+			return borderInsets.top + sumValues(rowHeights, vGap, gridPosition.y);
 		}
 
 		public int pixelWidth() {
 			return borderInsets.left + borderInsets.right
-					+ sumValues(columnWidths, hGap, columnWidths.length);
+					+ sumValues(columnWidths, hGap, columnWidths.length) - hGap;
 		}
 
 		public int pixelHeight() {
 			return borderInsets.top + borderInsets.bottom
-					+ sumValues(rowHeights, hGap, rowHeights.length);
+					+ sumValues(rowHeights, hGap, rowHeights.length) - vGap;
 		}
 
 		private int sumValues(int[] array, int gap, int upToExcl) {
@@ -124,7 +123,7 @@ public class AutoSizeGridLayout implements LayoutManager {
 				sum += array[i];
 			}
 			if (array.length > 0 && upToExcl > 0) {
-				sum += (upToExcl - 1) * gap;
+				sum += upToExcl * gap;
 			}
 			return sum;
 		}
